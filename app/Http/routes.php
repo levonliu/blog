@@ -18,7 +18,9 @@ Route::get('/', function () {
 
 Route::get('/test','IndexController@index');
 
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin',], function (){
 
+});
 //登录界面
 Route::any('admin/login','Admin\LoginController@login');
 
@@ -28,7 +30,12 @@ Route::get('admin/code','Admin\LoginController@code');
 //密码加密
 Route::any('admin/crypt','Admin\LoginController@crypt');
 
-//后台主界面
-Route::any('admin/index','Admin\IndexController@index');
-
-Route::any('admin/info','Admin\IndexController@info');
+//后台
+Route::group(['middleware' => ['admin.login'], 'prefix' => 'admin', 'namespace' => 'Admin'], function (){
+    //主界面index
+    Route::any('index','IndexController@index');
+    //info
+    Route::any('info','IndexController@info');
+    //退出quit
+    Route::any('quit','LoginController@quit');
+});

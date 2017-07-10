@@ -27,5 +27,3 @@ Route::get('admin/code','Admin\LoginController@code');
 
 //密码加密
 Route::any('admin/crypt','Admin\LoginController@crypt');
-
-Route::any('admin/test','Admin\LoginController@test');

@@ -19,19 +19,20 @@ Route::get('/', function () {
 Route::get('/test','IndexController@index');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin',], function (){
+    //登录界面
+    Route::any('login','LoginController@login');
 
+    //生成验证码
+    Route::get('code','LoginController@code');
+
+    //密码加密
+    Route::any('crypt','LoginController@crypt');
 });
-//登录界面
-Route::any('admin/login','Admin\LoginController@login');
 
-//生成验证码
-Route::get('admin/code','Admin\LoginController@code');
-
-//密码加密
-Route::any('admin/crypt','Admin\LoginController@crypt');
 
 //后台
 Route::group(['middleware' => ['admin.login'], 'prefix' => 'admin', 'namespace' => 'Admin'], function (){
+
     //主界面index
     Route::any('index','IndexController@index');
     //info

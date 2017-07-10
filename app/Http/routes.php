@@ -32,11 +32,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin',], function (){
 
 //后台
 Route::group(['middleware' => ['admin.login'], 'prefix' => 'admin', 'namespace' => 'Admin'], function (){
-
     //主界面index
-    Route::any('index','IndexController@index');
+    Route::get('index','IndexController@index');
     //info
-    Route::any('info','IndexController@info');
+    Route::get('info','IndexController@info');
     //退出quit
-    Route::any('quit','LoginController@quit');
+    Route::get('quit','LoginController@quit');
+    //修改密码pwd
+    Route::any('pwd','IndexController@pwd');
 });

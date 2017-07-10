@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Model\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -19,8 +20,13 @@ class LoginController extends CommonController
             $code = new \Code();
             $_code = $code->get();
             if (strtoupper($input['code']) != $_code){
-                return back()->with('msg','验证码错误');
+                return back()->with('msg','验证码错误！');
             }
+            $user  = User::first();
+            if ($user->user_name != $input['user_name'] || Crypt::decrypt($user->user_pwd) != $input['user_pwd']){
+                return back()->with('msg','用户名或密码错误！');
+            }
+            session(['user'=>$user]);
         }else{
             return view('admin.login');
         }
@@ -38,7 +44,6 @@ class LoginController extends CommonController
     {
         $str = '123456';
         echo Crypt::encrypt($str);
-//        echo $str;
     }
 
 }

@@ -42,4 +42,6 @@ Route::group(['middleware' => ['admin.login'], 'prefix' => 'admin', 'namespace' 
     Route::any('pwd','IndexController@pwd');
 
     Route::resource('category','CategoryController');
+
+    Route::resource('cate/changeorder','CategoryController@changeorder');
 });

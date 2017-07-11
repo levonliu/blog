@@ -15,6 +15,9 @@ class Category extends Model
     //默认时间设置
     public $timestamps = false;
 
+    //排除不可编辑字段
+    protected $guarded = [];
+
     /**
      * 获取树形结构列表
      * @return array

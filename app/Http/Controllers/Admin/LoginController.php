@@ -44,7 +44,9 @@ class LoginController extends CommonController
     public function crypt()
     {
         $str = 'admin';
-        echo Crypt::encrypt($str);
+        $str2 = '';
+//        echo Crypt::encrypt($str);
+//        echo Crypt::decrypt($str2);
     }
 
     //退出

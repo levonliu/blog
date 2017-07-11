@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/test','IndexController@index');
+//Route::get('/test','IndexController@index');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin',], function (){
     //登录界面
@@ -40,4 +40,6 @@ Route::group(['middleware' => ['admin.login'], 'prefix' => 'admin', 'namespace' 
     Route::get('quit','LoginController@quit');
     //修改密码pwd
     Route::any('pwd','IndexController@pwd');
+
+    Route::resource('category','CategoryController');
 });

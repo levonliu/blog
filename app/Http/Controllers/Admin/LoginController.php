@@ -43,7 +43,7 @@ class LoginController extends CommonController
     //密码加密
     public function crypt()
     {
-        $str = '123456';
+        $str = 'admin';
         echo Crypt::encrypt($str);
     }
 

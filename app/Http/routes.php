@@ -40,8 +40,15 @@ Route::group(['middleware' => ['admin.login'], 'prefix' => 'admin', 'namespace' 
     Route::get('quit','LoginController@quit');
     //修改密码pwd
     Route::any('pwd','IndexController@pwd');
+    //图片上传
+    Route::any('upload','CommonController@upload');
 
+    //分类排序changeorder
+    Route::post('cate/changeorder','CategoryController@changeorder');
+    //分类资源路由
     Route::resource('category','CategoryController');
 
-    Route::resource('cate/changeorder','CategoryController@changeorder');
+    //文章资源路由
+    Route::resource('article','ArticleController');
+
 });

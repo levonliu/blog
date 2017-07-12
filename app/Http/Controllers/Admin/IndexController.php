@@ -37,16 +37,17 @@ class IndexController extends CommonController
     public function pwd()
     {
         if ($pwd = Input::all()){
+            //规则
             $rules = [
                 'password' => 'required|between:5,20|confirmed',
-
             ];
+            //信息
             $msg = [
                 'password.required'     => '新密码不能为空!',
                 'password.between'      => '新密码要在5-20位之间!',
                 'password.confirmed'    => '新密码和确认密码不一致!',
             ];
-
+            //验证
             $validator = Validator::make($pwd,$rules,$msg);
             if ($validator->passes()){
                 $user = User::first();

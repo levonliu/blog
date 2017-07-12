@@ -34,7 +34,7 @@
             <table class="add_tab">
                 <tbody>
                 <tr>
-                    <th width="120">父级分类：</th>
+                    <th width="120">分类：</th>
                     <td>
                         <select name="cate_id">
                             @foreach($data as $k => $v)
@@ -58,7 +58,7 @@
                 <tr>
                     <th>缩略图：</th>
                     <td>
-                        <input type="text" size="50" name="art_thumb">
+                        <input type="text" size="50" name="art_thumb" readonly>
                         <input id="file_upload" name="file_upload" type="file" multiple="true">
                         <script src="{{asset('resources/org/uploadify/jquery.uploadify.min.js')}}" type="text/javascript"></script>
                         <link rel="stylesheet" type="text/css" href="{{asset('resources/org/uploadify/uploadify.css')}}">

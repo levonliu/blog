@@ -32,11 +32,13 @@
     <!--搜索结果页面 列表 开始-->
     <form action="#" method="post">
         <div class="result_wrap">
+            <div class="result_title">
+                <h3>分类管理</h3>
+            </div>
             <!--快捷导航 开始-->
             <div class="result_content">
                 <div class="short_wrap">
-                    <a href="#"><i class="fa fa-plus"></i>新增文章</a>
-                    <a href="#"><i class="fa fa-recycle"></i>批量删除</a>
+                    <a href="{{url('admin/category/create')}}"><i class="fa fa-plus"></i>新增分类</a>
                     <a href="{{url('admin/category')}}"><i class="fa fa-refresh"></i>更新排序</a>
                 </div>
             </div>
@@ -66,8 +68,8 @@
                             <td>{{$v['cate_title']}}</td>
                             <td>{{$v['cate_view']}}</td>
                             <td>
-                                <a href="#">修改</a>
-                                <a href="#">删除</a>
+                                <a href="{{url('admin/category/'.$v['cate_id'].'/edit')}}">修改</a>
+                                <a href="javascript:;" onclick="delCat({{$v['cate_id']}})">删除</a>
                             </td>
                         </tr>
                     @endforeach
@@ -108,6 +110,7 @@
     <!--搜索结果页面 列表 结束-->
 
     <script>
+        //排序
         function changeOrder(obj,cate_id) {
             var cate_order = $(obj).val();
             $.post('{{url('admin/cate/changeorder')}}',{'_token':'{{csrf_token()}}','cate_id':cate_id,'cate_order':cate_order},function (data) {
@@ -118,5 +121,22 @@
                 }
             })
         }
+
+        //删除分类
+        function delCat(cate_id) {
+            layer.confirm('您确定要删除吗？', {
+                btn: ['是','否'] //按钮
+            }, function(){
+                $.post('{{url('admin/category/')}}/'+cate_id,{'_method':'delete','_token':'{{csrf_token()}}'},function (data) {
+                    if (data.status == 0){
+                        layer.msg(data.msg,{icon:6});
+                        setTimeout(location.href = location.href,3000);
+                    }else {
+                        layer.msg(data.msg,{icon:5});
+                    }
+                });
+            });
+        }
+
     </script>
 @endsection

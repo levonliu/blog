@@ -5,8 +5,8 @@
 		<div class="top_left">
 			<div class="logo">Blog后台管理</div>
 			<ul>
-				<li><a href="#" class="active">首页</a></li>
-				<li><a href="#">管理页</a></li>
+				<li><a href="{{url('admin/index')}}" class="active">首页</a></li>
+				{{--<li><a href="#">管理页</a></li>--}}
 			</ul>
 		</div>
 		<div class="top_right">
@@ -25,8 +25,8 @@
 			<li>
 				<h3><i class="fa fa-fw fa-clipboard"></i>常用操作</h3>
 				<ul class="sub_menu">
-					<li><a href="add.html" target="main"><i class="fa fa-fw fa-plus-square"></i>添加页</a></li>
-					<li><a href="category/list.html" target="main"><i class="fa fa-fw fa-list-ul"></i>列表页</a></li>
+					<li><a href="{{url('admin/category/create')}}" target="main"><i class="fa fa-fw fa-plus-square"></i>添加分类</a></li>
+					<li><a href="{{url('admin/category')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>分类列表</a></li>
 					<li><a href="tab.html" target="main"><i class="fa fa-fw fa-list-alt"></i>tab页</a></li>
 					<li><a href="img.html" target="main"><i class="fa fa-fw fa-image"></i>图片列表</a></li>
 				</ul>

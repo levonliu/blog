@@ -51,7 +51,16 @@ Route::group(['middleware' => ['admin.login'], 'prefix' => 'admin', 'namespace' 
     //文章资源路由
     Route::resource('article','ArticleController');
 
-    //连接资源路由
+    //友情链接资源路由
     Route::resource('links','LinksController');
     Route::post('links/changeorder','LinksController@changeorder');
+
+    //导航资源路由
+    Route::resource('navs','NavsController');
+    Route::post('navs/changeorder','NavsController@changeorder');
+
+    //配置资源路由
+    Route::resource('conf','ConfigController');
+    Route::post('conf/changeorder','ConfigController@changeorder');
+    Route::post('conf/changecontent','ConfigController@changecontent');
 });

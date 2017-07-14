@@ -82,11 +82,24 @@ class ArticleController extends CommonController
     public function update($art_id)
     {
         $updata = Input::except('_token','_method');
-        $re = Article::where('art_id',$art_id)->update($updata);
-        if ($re){
-            return redirect('admin/article');
+        $rules = [
+            'art_title'     => 'required',
+            'art_content'   => 'required',
+        ];
+        $msg = [
+            'art_title.required'    => '文章标题不能为空!',
+            'art_content.required'  => '文章内容不能为空!',
+        ];
+        $validator = Validator::make($updata,$rules,$msg);
+        if ($validator->passes()){
+            $re = Article::where('art_id',$art_id)->update($updata);
+            if ($re){
+                return redirect('admin/article');
+            }else{
+                return back()->withErrors('文章修改失败,请稍后重试！');
+            }
         }else{
-            return back()->withErrors('文章修改失败,请稍后重试！');
+            return back()->withErrors($validator);
         }
     }
 

@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
-class LinksController extends Controller
+class LinksController extends CommonController
 {
     /**
      * get admin/links
@@ -57,9 +57,11 @@ class LinksController extends Controller
         $post = Input::except('_token');
         $rules = [
             'link_name' => 'required',
+            'link_url' => 'required',
         ];
         $msg = [
-            'link_name.required' => '链接名称不能为空!',
+            'link_name.required' => '友情链接名称不能为空!',
+            'link_url.required'  => '友情链接不能为空!',
         ];
 
         $validator = Validator::make($post,$rules,$msg);
@@ -90,14 +92,27 @@ class LinksController extends Controller
      * put admin/category/{category}
      * 更新分类
      */
-    public function update($cate_id)
+    public function update($link_id)
     {
         $updata = Input::except('_token','_method');
-        $re = Category::where('cate_id',$cate_id)->update($updata);
-        if ($re){
-            return redirect('admin/category');
+        $rules = [
+            'link_name' => 'required',
+            'link_url' => 'required',
+        ];
+        $msg = [
+            'link_name.required' => '友情链接名称不能为空!',
+            'link_url.required'  => '友情链接不能为空!',
+        ];
+        $validator = Validator::make($updata,$rules,$msg);
+        if ($validator->passes()){
+            $re = Links::where('link_id',$link_id)->update($updata);
+            if ($re){
+                return redirect('admin/links');
+            }else{
+                return back()->withErrors('链接修改失败,请稍后重试！');
+            }
         }else{
-            return back()->withErrors('分类信息修改失败,请稍后重试！');
+            return back()->withErrors($validator);
         }
     }
 

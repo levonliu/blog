@@ -9,7 +9,7 @@
     <!--面包屑导航 开始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo; 友情链接管理
+        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo; 导航管理
     </div>
     <!--面包屑导航 结束-->
 
@@ -39,13 +39,13 @@
     <form action="#" method="post">
         <div class="result_wrap">
             <div class="result_title">
-                <h3>链接列表</h3>
+                <h3>导航列表</h3>
             </div>
             <!--快捷导航 开始-->
             <div class="result_content">
                 <div class="short_wrap">
-                    <a href="{{url('admin/links/create')}}"><i class="fa fa-plus"></i>新增连接</a>
-                    <a href="{{url('admin/links')}}"><i class="fa fa-plus"></i>更新排序</a>
+                    <a href="{{url('admin/navs/create')}}"><i class="fa fa-plus"></i>新增导航</a>
+                    <a href="{{url('admin/navs')}}"><i class="fa fa-plus"></i>更新导航</a>
                 </div>
             </div>
             <!--快捷导航 结束-->
@@ -57,32 +57,32 @@
                     <tr>
                         <th class="tc" width="5%">排序</th>
                         <th class="tc" width="5%">ID</th>
-                        <th>链接名称</th>
-                        <th>链接标题</th>
-                        <th>友情链接</th>
+                        <th>导航名称</th>
+                        <th>导航别名</th>
+                        <th>导航链接</th>
                         <th>操作</th>
                     </tr>
-                    @foreach($linksData as $v)
+                    @foreach($navsData as $v)
                         <tr>
                             <td class="tc">
-                                <input type="text" onchange="changeOrder(this,'{{$v['link_id']}}')" value="{{$v['link_order']}}">
+                                <input type="text" onchange="changeOrder(this,'{{$v['nav_id']}}')" value="{{$v['nav_order']}}">
                             </td>
-                            <td class="tc">{{$v['link_id']}}</td>
+                            <td class="tc">{{$v['nav_id']}}</td>
                             <td>
-                                <a href="#">{{$v['link_name']}}</a>
+                                <a href="#">{{$v['nav_name']}}</a>
                             </td>
-                            <td>{{$v['link_title']}}</td>
-                            <td>{{$v['link_url']}}</td>
+                            <td>{{$v['nav_alias']}}</td>
+                            <td>{{$v['nav_url']}}</td>
                             <td>
-                                <a href="{{url('admin/links/'.$v['link_id'].'/edit')}}">修改</a>
-                                <a href="javascript:;" onclick="dellink({{$v['link_id']}})">删除</a>
+                                <a href="{{url('admin/navs/'.$v['nav_id'].'/edit')}}">修改</a>
+                                <a href="javascript:;" onclick="delnav({{$v['nav_id']}})">删除</a>
                             </td>
                         </tr>
                     @endforeach
                 </table>
 
                 <div class="page_list">
-                    {{$linksData->links()}}
+                    {{$navsData->links()}}
                 </div>
             </div>
         </div>
@@ -91,11 +91,11 @@
 
     <script>
         //删除分类
-        function dellink(link_id) {
-            layer.confirm('您确定要删除此链接吗？', {
+        function delnav(nav_id) {
+            layer.confirm('您确定要删除该自定义导航吗？', {
                 btn: ['是','否'] //按钮
             }, function(){
-                $.post('{{url('admin/links/')}}/'+link_id,{'_method':'delete','_token':'{{csrf_token()}}'},function (data) {
+                $.post('{{url('admin/navs/')}}/'+nav_id,{'_method':'delete','_token':'{{csrf_token()}}'},function (data) {
                     if (data.status == 0){
                         layer.msg(data.msg,{icon:6});
                         setTimeout(location.href = location.href,3000);
@@ -107,9 +107,9 @@
         }
 
         //排序
-        function changeOrder(obj,link_id) {
-            var link_order = $(obj).val();
-            $.post('{{url('admin/links/changeorder')}}',{'_token':'{{csrf_token()}}','link_id':link_id,'link_order':link_order},function (data) {
+        function changeOrder(obj,nav_id) {
+            var nav_order = $(obj).val();
+            $.post('{{url('admin/navs/changeorder')}}',{'_token':'{{csrf_token()}}','nav_id':nav_id,'nav_order':nav_order},function (data) {
                 if (data.status == 0){
                     layer.msg(data.msg,{icon:6});
                 }else {

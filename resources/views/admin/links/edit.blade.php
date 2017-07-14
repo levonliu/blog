@@ -48,7 +48,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>链接地址：</th>
+                    <th><i class="require">*</i>URL：</th>
                     <td>
                         <input type="text" class="lg" name="link_url" value="{{$linkData['link_url']}}">
                     </td>

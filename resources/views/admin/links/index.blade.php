@@ -39,7 +39,7 @@
     <form action="#" method="post">
         <div class="result_wrap">
             <div class="result_title">
-                <h3>链接列表</h3>
+                <h3>友情链接列表</h3>
             </div>
             <!--快捷导航 开始-->
             <div class="result_content">

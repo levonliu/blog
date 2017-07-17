@@ -59,7 +59,8 @@ Route::group(['middleware' => ['admin.login'], 'prefix' => 'admin', 'namespace' 
     Route::resource('navs','NavsController');
     Route::post('navs/changeorder','NavsController@changeorder');
 
-    //配置资源路由
+    //配置项资源路由
+    Route::get('conf/putfile','ConfigController@putFile');
     Route::resource('conf','ConfigController');
     Route::post('conf/changeorder','ConfigController@changeorder');
     Route::post('conf/changecontent','ConfigController@changecontent');

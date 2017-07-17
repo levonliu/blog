@@ -53,7 +53,20 @@ class ConfigController extends CommonController
         foreach ($data['conf_content'] as $k => $v){
             Config::where('conf_id',$k)->update(['conf_content'=>$v]);
         }
+        //写入到配置文件中
+        $this->putFile();
         return back()->withErrors('配置项修改成功!');
+    }
+
+    /**
+     * 将配置项写入web_conf.php配置文件中
+     */
+    public function putFile()
+    {
+        $config = Config::pluck('conf_content','conf_name')->all();
+        $path = base_path().'\config\web_conf.php';
+        $str = "<?php return ".var_export($config,true).';';
+        file_put_contents($path,$str);
     }
     
 
@@ -142,6 +155,7 @@ class ConfigController extends CommonController
         if ($validator->passes()){
             $re = Config::where('conf_id',$conf_id)->update($updata);
             if ($re){
+                $this->putFile();
                 return redirect('admin/conf');
             }else{
                 return back()->withErrors('链接修改失败,请稍后重试！');
@@ -170,6 +184,7 @@ class ConfigController extends CommonController
     {
         $re = Config::where('conf_id',$delId)->delete();
         if ($re){
+            $this->putFile();
             $data = ['status' => 0, 'msg' => '删除成功！'];
         }else{
             $data = ['status' => 1, 'msg' => '删除失败！,请稍后重试'];

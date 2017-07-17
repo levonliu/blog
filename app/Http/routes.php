@@ -11,12 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+//前台
+Route::group(['namespace' => 'Home'], function (){
+    Route::get('/','IndexController@index');
+    Route::get('/cate','IndexController@cate');
+    Route::get('/art','IndexController@article');
 });
 
 
-//Route::get('/test','IndexController@index');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin',], function (){
     //登录界面
@@ -28,7 +34,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin',], function (){
     //密码加密
     Route::any('crypt','LoginController@crypt');
 });
-
 
 //后台
 Route::group(['middleware' => ['admin.login'], 'prefix' => 'admin', 'namespace' => 'Admin'], function (){

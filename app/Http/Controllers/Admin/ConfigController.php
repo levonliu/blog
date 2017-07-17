@@ -52,8 +52,8 @@ class ConfigController extends CommonController
         $data = Input::except('_token');
         foreach ($data['conf_content'] as $k => $v){
             Config::where('conf_id',$k)->update(['conf_content'=>$v]);
-            return back()->withErrors('配置项修改成功');
         }
+        return back()->withErrors('配置项修改成功!');
     }
     
 

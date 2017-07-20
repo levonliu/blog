@@ -20,8 +20,8 @@
 </header>
 @yield('content');
 <footer>
-    <p>Design by blog <a href="http://www.miitbeian.gov.cn/" target="_blank">http://www.blog.com</a> <a
-                href="/">网站统计</a></p>
+    <p> {!!Config('web_conf.copyright')!!} <a href="/">网站统计</a></p>
+
 </footer>
 <!--[if lt IE 9]>
 <script src="{{asset('resources/views/home/js/modernizr.js')}}"></script>

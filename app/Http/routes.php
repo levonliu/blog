@@ -18,7 +18,7 @@
 //前台
 Route::group(['namespace' => 'Home'], function (){
     Route::get('/','IndexController@index');
-    Route::get('/cate','IndexController@cate');
+    Route::get('/cate/{cate_id}','IndexController@cate');
     Route::get('/art','IndexController@article');
 });
 
@@ -26,7 +26,7 @@ Route::group(['namespace' => 'Home'], function (){
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin',], function (){
     //登录界面
-    Route::any('login','LoginController@login');
+    Route::any('/','LoginController@login');
 
     //生成验证码
     Route::get('code','LoginController@code');

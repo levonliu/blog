@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Model\Article;
+use App\Http\Model\Category;
 use App\Http\Model\Links;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Config;
 
 class IndexController extends CommonController
 {
@@ -17,7 +19,7 @@ class IndexController extends CommonController
     //首页
     public function index()
     {
-        #点击量最高的6篇文章
+        #点击量最高的6篇文章(站长推荐)
         $hot = Article::orderBy('art_view','desc')->take(6)->get();
 
         #图文列表
@@ -29,15 +31,22 @@ class IndexController extends CommonController
         #友情链接
         $links = Links::orderBy('link_order','asc')->get();
 
+        $hotarts = Article::orderBy('art_view','desc')->take(5)->get();
+
         #网站配置项
 
-        return view('home.index',compact('hot','artData','newData','links'));
+        return view('home.index',compact('hot','hotarts','artData','newData','links'));
     }
 
     //文章列表
-    public function cate()
+    public function cate($cate_id)
     {
-        return view('home.list');
+        $art_list = Category::find($cate_id);
+
+        #图文列表
+        $artData = Article::where('cate_id',$cate_id)->orderBy('art_time','desc')->paginate(4);
+
+        return view('home.list',compact('art_list','artData'));
     }
 
     //文章详情

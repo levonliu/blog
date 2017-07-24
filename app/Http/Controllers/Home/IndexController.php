@@ -25,17 +25,10 @@ class IndexController extends CommonController
         #图文列表
         $artData = Article::orderBy('art_time','desc')->paginate(5);
 
-        #最新发布文章（8篇）
-        $newData = Article::orderBy('art_time','desc')->take(8)->get();
-
         #友情链接
         $links = Links::orderBy('link_order','asc')->get();
 
-        $hotarts = Article::orderBy('art_view','desc')->take(5)->get();
-
-        #网站配置项
-
-        return view('home.index',compact('hot','hotarts','artData','newData','links'));
+        return view('home.index',compact('hot','artData','links'));
     }
 
     //文章列表
@@ -43,15 +36,36 @@ class IndexController extends CommonController
     {
         $art_list = Category::find($cate_id);
 
-        #图文列表
+        //查看次数自增
+        Category::where('cate_id',$cate_id)->increment('cate_view');
+
+        #图文列表(4篇)
         $artData = Article::where('cate_id',$cate_id)->orderBy('art_time','desc')->paginate(4);
 
-        return view('home.list',compact('art_list','artData'));
+        //当前分类的子分类
+        $submenu = Category::where('cate_pid',$cate_id)->get();
+
+
+        return view('home.list',compact('art_list','artData','submenu'));
     }
 
     //文章详情
-    public function article()
+    public function article($art_id)
     {
-        return view('home.news');
+        $art = Article::Join('category','article.cate_id','=','category.cate_id')->where('art_id',$art_id)->first();
+
+        //查看次数自增
+        Article::where('art_id',$art_id)->increment('art_view');
+
+        #上一篇文章
+        $artPre = Article::where('art_id','<',$art_id)->orderBy('art_id','desc')->first();
+
+        #下一篇文章
+        $artNext = Article::where('art_id','>',$art_id)->orderBy('art_id','asc')->first();
+
+        #相关文章
+        $artRelate = Article::where('cate_id',$art['cate_id'])->orderBy('art_id','desc')->take(6)->get();
+
+        return view('home.news',compact('art','artPre','artNext','artRelate'));
     }
 }

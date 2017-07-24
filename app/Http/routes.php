@@ -19,7 +19,7 @@
 Route::group(['namespace' => 'Home'], function (){
     Route::get('/','IndexController@index');
     Route::get('/cate/{cate_id}','IndexController@cate');
-    Route::get('/art','IndexController@article');
+    Route::get('/a/{art_id}','IndexController@article');
 });
 
 
